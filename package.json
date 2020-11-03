@@ -29,6 +29,6 @@
     "@types/jsonwebtoken": "^8.5.0",
     "@types/mongoose": "^5.7.36",
     "jest": "^26.6.1",
-    "ts-jest": "^26.4.3",
+    "ts-jest": "^26.4.3"
   }
 }
