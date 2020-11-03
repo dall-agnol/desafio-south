@@ -12,7 +12,7 @@ const indexRoutes = [
         })
     })
 ]
-
+routes.use(indexRoutes)
 routes.use(UserRoutes);
 routes.use(StoreRoutes);
 export default routes;
