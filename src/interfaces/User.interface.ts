@@ -11,7 +11,7 @@ export default interface UserDoc extends mongoose.Document {
         type: string,
         required: boolean
     },
-    type: {
+    role: {
         type: string
     }
 }

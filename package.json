@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "tsc && node dist/index.js",
-    "test": "test"
+    "test": "npx jest"
   },
   "author": "lorenzo dallagnol",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv-safe": "^8.2.0",
@@ -21,8 +22,11 @@
     "@types/cors": "^2.8.8",
     "@types/dotenv-safe": "^8.1.1",
     "@types/express": "^4.17.8",
+    "@types/jest": "^26.0.15",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/mongoose": "^5.7.36",
+    "jest": "^26.6.1",
+    "ts-jest": "^26.4.3",
     "typescript": "^4.0.5"
   }
 }

@@ -5,8 +5,7 @@ import { validateJWT } from '../../auth/jwt';
 
 
 export const UserRoutes = [
-    routes.post('/user/login', validateJWT, UserController.login),
-    routes.post('/user/logout', validateJWT, UserController.logout),
+    routes.post('/user/login', UserController.login),
     routes.post('/user/register', UserController.register),
     routes.put('/user/update/:id', validateJWT, UserController.update)
 

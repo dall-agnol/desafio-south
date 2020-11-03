@@ -7,49 +7,45 @@ import { Response } from '../../utils/success.response';
 
 export const UserController = {
     async login(req, res) {
-        //const { email, password } = req.body;
-        //const user = await User.find({email, password});
-        //if (user && user.length) {
-            //console.log('usuário encontrado: ', user);
+        const { email, password } = req.body;
+        const user = await User.find({email, password});
+        if (user && user.length) {
             const key = String(process.env.SECRET);
-            console.log('key: ', key)
+            user[0].__v = undefined;
             const token = jwt.sign({
-                //id: user[0]._id,
-                //role: user[0].type
-                id: 1,
-                role: 'admin'
+                id: user[0]._id,
+                role: user[0].role
             }, key, {
-                expiresIn: '1d'
+                expiresIn: '7d'
             });
-            const user = []
-            return res.status(200).send(Response(200, user[0], token));
-       // }
-        
-        //return res.status(400).send(ErrorHandler(400, 'encontrar usuário.'))
-    },
-    async logout(req, res) {
-
-        console.log(req.role);
-        return res.status(204).send(Response(204, undefined, null))
-    },
-    async create(req, res) {
-        try {
-            //const data = req.body;
-            //console.log(data);
-            //const user = await User.create(data);
-            return res.status(200).send({message: 'oi'});
-        } catch (error) {
-            return res.status(400).send({message: 'erro'});
+            const response = {
+                auth: token,
+                data: user[0]
+            }
+            return res.status(200).send(response);
+        } else {
+            return res.status(401).send(ErrorHandler(401, 'autenticar usuário'))
         }
-     },
-     async register(req, res) {
-
+    },
+    async register(req, res) {
+        try {
+            const data = req.body;
+            const user = await User.create(data);
+            user.__v = undefined;
+            return res.status(200).send(user);
+        } catch (error) {
+            return res.status(500).send(ErrorHandler(500, 'realizar cadastro'));
+        }
      },
      async update(req, res) {
         try {
-            
+            const data = req.body;
+            const id = req.params.id;
+            const user = await User.findByIdAndUpdate(id, data, { new: true });
+            user.__v = undefined;
+            return res.status(200).send(user);
         } catch (error) {
-            
+            return res.status(500).send(ErrorHandler(500, 'realizar atualização'));
         }
      }
     

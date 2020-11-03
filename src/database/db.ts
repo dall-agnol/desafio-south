@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
-const uri = "mongodb+srv://dallagnol:pedepano10@cluster0.dkjhj.mongodb.net/tj-treinamento?retryWrites=true&w=majority";
-
+const uri = "mongodb+srv://dallagnol:desafio-south@cluster0.vcid0.mongodb.net/desafio-south?retryWrites=true&w=majority"
 const connect = () => {
     let promise = new Promise((resolve, reject) => {
         mongoose.connect(uri, {

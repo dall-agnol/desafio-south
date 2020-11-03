@@ -18,4 +18,4 @@ const schemaStores = new mongoose.Schema({
         required: true
     }
 });
-export default mongoose.model<StoreInterface>('Store', schemaStores);
+export default mongoose.model<any>('Store', schemaStores);

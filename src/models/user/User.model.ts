@@ -11,10 +11,10 @@ const schemaUsers = new mongoose.Schema({
         type: String,
         required: true
     },
-    type: {
+    role: {
         type: String,
         enum: ['admin', 'client'],
         default: 'client'
     }
 });
-export default mongoose.model<UserInterface>('Users', schemaUsers);
+export default mongoose.model<any>('Users', schemaUsers);
