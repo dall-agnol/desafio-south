@@ -4,8 +4,9 @@
   "description": "API em Node.js",
   "main": "index.js",
   "scripts": {
-    "start": "npx tsc && node dist/index.js",
-    "test": "npx jest"
+    "start": "tsc && node dist/index.js",
+    "test": "npx jest",
+    "postinstall": "tsc"
   },
   "author": "lorenzo dallagnol",
   "license": "ISC",
