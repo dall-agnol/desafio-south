@@ -1,6 +1,6 @@
 const URLS = {
     LOCAL: `http://localhost:${process.env.PORT || 3000}`,
-    PROD: ``
+    PROD: `https://desafio-south.herokuapp.com`
 }
 
-export const URL = URLS.LOCAL
+export const URL = URLS.PROD

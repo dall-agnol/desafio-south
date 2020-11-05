@@ -11,7 +11,6 @@ export const validateJWT = (req, res, next) => {
 
     jwt.verify(token, secret, (err, decoded) => {
         if (err) {
-            console.log('erro: ', err);
             return res.status(401).send(ErrorHandler(401, `autenticar token (${err.message})`))
         }
         req.role = decoded.role;

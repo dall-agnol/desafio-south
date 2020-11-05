@@ -1,13 +1,9 @@
 import axios from 'axios';
 import { URL } from '../src/environments/test.environment';
+import { returnToken } from '../src/utils/returnToken';
+jest.setTimeout(30000);
 let token: string = '';
 
-const returnToken = async (email: string, password: string) => {
-    const url = `${URL}/user/login`;
-    const data = { email, password};
-    const request = await axios.post(url, data);
-    return request.data.auth;
-}
 beforeAll(async () => {
     token = await returnToken('admin@admin.com', 'admin');
 });

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { URL } from '../src/environments/test.environment';
+jest.setTimeout(30000);
 
 describe('do login', () => {
     it('should do login and return the auth token', async () => {

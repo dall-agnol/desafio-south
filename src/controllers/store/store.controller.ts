@@ -1,6 +1,7 @@
 import Store from '../../models/store/Store.model';
 import { ErrorHandler } from '../../utils/error.handler';
 import { isAdmin } from '../../auth/isAdmin';
+import { ErrorController } from '../../utils/error.controller';
 
 export const StoreController = {
     async insert(req, res) {
@@ -13,7 +14,11 @@ export const StoreController = {
             item.__v = undefined;
             return res.status(200).send(item);
         } catch (error) {
-            return res.status(500).send(ErrorHandler(500, 'inserir novo produto'));
+            const data: any = {
+                messages: ErrorHandler(500, 'inserir novo produto')
+            }
+            if (error.errors) data.data = ErrorController(error.errors);
+            return res.status(500).send(data);
         }
     },
     async update(req, res) {
@@ -26,8 +31,12 @@ export const StoreController = {
             const item = await Store.findByIdAndUpdate(id, data, { new: true });
             return res.status(200).send(item);
         } catch (error) {
-            console.log('erro ao buscar:', error);
-            return res.status(500).send(ErrorHandler(500, 'atualizar produto'))
+            const data: any = {
+                messages: ErrorHandler(500, 'atualizar produto')
+            }
+            if (error.errors) data.data = ErrorController(error.errors);
+
+            return res.status(500).send(data)
         }
     },
     async delete(req, res) {
@@ -36,10 +45,14 @@ export const StoreController = {
                 return res.status(401).send(ErrorHandler(401, 'autenticar token'));
             }
             const id = req.params.id;
-            const item = await Store.findByIdAndDelete(id);
-            return res.status(204).send({ message: 'Sucesso ao deletar o produto.' });
+            await Store.findByIdAndDelete(id);
+            return res.status(201).send({ message: 'Sucesso ao deletar o produto.' });
         } catch (error) {
-            return res.status(500).send(ErrorHandler(500, 'buscar usuário'));
+            const data: any = {
+                messages: ErrorHandler(500, 'deletar item')
+            }
+            if (error.errors) data.data = ErrorController(error.errors);
+            return res.status(500).send(data);
         }
     },
     async getById(req, res) {
@@ -48,7 +61,11 @@ export const StoreController = {
             const item = await Store.findById(id);
             return res.status(200).send(item);
         } catch (error) {
-            return res.status(500).send(ErrorHandler(500, 'recuperar produto'))
+            const data: any = {
+                messages: ErrorHandler(500, 'recuperar produto')
+            }
+            if (error.errors) data.data = ErrorController(error.errors);
+            return res.status(500).send(data)
         }
     },
     async list(req, res) {
@@ -59,18 +76,19 @@ export const StoreController = {
             const onlyAvailable = Boolean(req.query.available);
             const name = req.query.name;
             let items = await Store
-            .find(name ? { name: { '$regex': name } } : {})
-            .skip(skip)
-            .limit(limit);
+                .find(name ? { name: { '$regex': name } } : {})
+                .skip(skip)
+                .limit(limit);
             if (onlyAvailable) {
-                items = items.filter((item: any) => {
-                    return item.quantity > 0
-                })
+                items = items.filter((item: any) => item.quantity > 0)
             }
             return res.status(200).send(items)
         } catch (error) {
-            console.log('erro: ', error)
-            return res.status(500).send(ErrorHandler(500, 'listar produtos'));
+            const data: any = {
+                messages: ErrorHandler(500, 'listar produto')
+            }
+            if (error.errors) data.data = ErrorController(error.errors);
+            return res.status(500).send(data);
         }
     }
 }
